@@ -1,0 +1,6 @@
+libbcinfo {
+  global:
+    _ZN6bcinfo*;
+  local:
+    *;
+};
