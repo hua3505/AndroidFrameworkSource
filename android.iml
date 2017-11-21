@@ -4,9 +4,9 @@
     <facet type="android" name="Android">
       <configuration />
     </facet>
-    <facet type="android-gradle" name="Android-Gradle">
+    <facet type="native-android-gradle" name="Native-Android-Gradle">
       <configuration>
-        <option name="GRADLE_PROJECT_PATH" />
+        <option name="SELECTED_BUILD_VARIANT" value="" />
       </configuration>
     </facet>
   </component>
@@ -2583,20 +2583,6 @@
       <sourceFolder url="file://$MODULE_DIR$/tools/external/fat32lib/src/main/java" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/gen" isTestSource="false" generated="true" />
       <excludeFolder url="file://$MODULE_DIR$/.repo" />
-      <excludeFolder url="file://$MODULE_DIR$/external/bluetooth" />
-      <excludeFolder url="file://$MODULE_DIR$/external/chromium" />
-      <excludeFolder url="file://$MODULE_DIR$/external/emma" />
-      <excludeFolder url="file://$MODULE_DIR$/external/icu4c" />
-      <excludeFolder url="file://$MODULE_DIR$/external/jdiff" />
-      <excludeFolder url="file://$MODULE_DIR$/external/webkit" />
-      <excludeFolder url="file://$MODULE_DIR$/frameworks/base/docs" />
-      <excludeFolder url="file://$MODULE_DIR$/out/eclipse" />
-      <excludeFolder url="file://$MODULE_DIR$/out/host" />
-      <excludeFolder url="file://$MODULE_DIR$/out/target/common/docs" />
-      <excludeFolder url="file://$MODULE_DIR$/out/target/common/obj/JAVA_LIBRARIES/android_stubs_current_intermediates" />
-      <excludeFolder url="file://$MODULE_DIR$/out/target/product" />
-      <excludeFolder url="file://$MODULE_DIR$/prebuilt" />
-      <excludeFolder url="file://$MODULE_DIR$/.repo" />
       <excludeFolder url="file://$MODULE_DIR$/abi" />
       <excludeFolder url="file://$MODULE_DIR$/art" />
       <excludeFolder url="file://$MODULE_DIR$/bionic" />
@@ -2609,11 +2595,23 @@
       <excludeFolder url="file://$MODULE_DIR$/device" />
       <excludeFolder url="file://$MODULE_DIR$/docs" />
       <excludeFolder url="file://$MODULE_DIR$/external" />
+      <excludeFolder url="file://$MODULE_DIR$/external/bluetooth" />
+      <excludeFolder url="file://$MODULE_DIR$/external/chromium" />
+      <excludeFolder url="file://$MODULE_DIR$/external/emma" />
+      <excludeFolder url="file://$MODULE_DIR$/external/icu4c" />
+      <excludeFolder url="file://$MODULE_DIR$/external/jdiff" />
+      <excludeFolder url="file://$MODULE_DIR$/external/webkit" />
+      <excludeFolder url="file://$MODULE_DIR$/frameworks/base/docs" />
       <excludeFolder url="file://$MODULE_DIR$/hardware" />
       <excludeFolder url="file://$MODULE_DIR$/libcore" />
       <excludeFolder url="file://$MODULE_DIR$/libnativehelper" />
       <excludeFolder url="file://$MODULE_DIR$/ndk" />
       <excludeFolder url="file://$MODULE_DIR$/out" />
+      <excludeFolder url="file://$MODULE_DIR$/out/eclipse" />
+      <excludeFolder url="file://$MODULE_DIR$/out/host" />
+      <excludeFolder url="file://$MODULE_DIR$/out/target/common/docs" />
+      <excludeFolder url="file://$MODULE_DIR$/out/target/common/obj/JAVA_LIBRARIES/android_stubs_current_intermediates" />
+      <excludeFolder url="file://$MODULE_DIR$/out/target/product" />
       <excludeFolder url="file://$MODULE_DIR$/pdk" />
       <excludeFolder url="file://$MODULE_DIR$/prebuilt" />
       <excludeFolder url="file://$MODULE_DIR$/prebuilts" />
@@ -2622,6 +2620,6 @@
       <excludeFolder url="file://$MODULE_DIR$/tools" />
     </content>
     <orderEntry type="sourceFolder" forTests="false" />
-    <orderEntry type="inheritedJdk" />
+    <orderEntry type="jdk" jdkName="Android API 24 Platform" jdkType="Android SDK" />
   </component>
 </module>
