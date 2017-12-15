@@ -2141,19 +2141,23 @@ class AlarmManagerService extends SystemService {
                     }
                 }
 
+                // count是表示在手机休眠期间，alarm可能已经过了多个触发时间，count就是错过的触发次数
                 alarm.count = 1;
                 triggerList.add(alarm);
+                // 打个日志，可以忽略
                 if ((alarm.flags&AlarmManager.FLAG_WAKE_FROM_IDLE) != 0) {
                     EventLogTags.writeDeviceIdleWakeFromIdle(mPendingIdleUntil != null ? 1 : 0,
                             alarm.statsTag);
                 }
                 if (mPendingIdleUntil == alarm) {
                     mPendingIdleUntil = null;
+                    // 结束idle状态，重新batch 所有的alarm，把pending中的alarm添加回去。
                     rebatchAllAlarmsLocked(false);
                     restorePendingWhileIdleAlarmsLocked();
                 }
                 if (mNextWakeFromIdle == alarm) {
                     mNextWakeFromIdle = null;
+                    // 找下一个唤醒的alarm
                     rebatchAllAlarmsLocked(false);
                 }
 
@@ -2186,6 +2190,7 @@ class AlarmManagerService extends SystemService {
 
         // This is a new alarm delivery set; bump the sequence number to indicate that
         // all apps' alarm delivery classes should be recalculated.
+        // 应该是用于标记这个分发集合的，在计算优先级时用到了
         mCurrentSeq++;
         calculateDeliveryPriorities(triggerList);
         Collections.sort(triggerList, mAlarmDispatchComparator);
@@ -2357,6 +2362,7 @@ class AlarmManagerService extends SystemService {
     }
 
     long currentNonWakeupFuzzLocked(long nowELAPSED) {
+        // 从灭屏到现在的时间
         long timeSinceOn = nowELAPSED - mNonInteractiveStartTime;
         if (timeSinceOn < 5*60*1000) {
             // If the screen has been off for 5 minutes, only delay by at most two minutes.
@@ -2385,9 +2391,12 @@ class AlarmManagerService extends SystemService {
     }
 
     boolean checkAllowNonWakeupDelayLocked(long nowELAPSED) {
+        // mInteractive 接收到亮屏广播时，会设为true
+        // 亮屏时，返回false
         if (mInteractive) {
             return false;
         }
+        // 应该是表示之前还没分发过alarm
         if (mLastAlarmDeliveryTime <= 0) {
             return false;
         }
@@ -2493,6 +2502,7 @@ class AlarmManagerService extends SystemService {
                             TAG, "Checking for alarms... rtc=" + nowRTC
                             + ", elapsed=" + nowELAPSED);
 
+                        // 这块没看懂
                         if (WAKEUP_STATS) {
                             if ((result & IS_WAKEUP_MASK) != 0) {
                                 long newEarliest = nowRTC - RECENT_WAKEUP_PERIOD;
@@ -2513,6 +2523,7 @@ class AlarmManagerService extends SystemService {
                         if (!hasWakeup && checkAllowNonWakeupDelayLocked(nowELAPSED)) {
                             // if there are no wakeup alarms and the screen is off, we can
                             // delay what we have so far until the future.
+                            // 延迟，并加入到mPendingNonWakeupAlarms中
                             if (mPendingNonWakeupAlarms.size() == 0) {
                                 mStartCurrentDelayTime = nowELAPSED;
                                 mNextNonWakeupDeliveryTime = nowELAPSED
@@ -2981,6 +2992,7 @@ class AlarmManagerService extends SystemService {
             if (alarm.operation != null) {
                 // PendingIntent alarm
                 try {
+                    // 发送
                     alarm.operation.send(getContext(), 0,
                             mBackgroundIntent.putExtra(
                                     Intent.EXTRA_ALARM_COUNT, alarm.count),
@@ -3005,6 +3017,7 @@ class AlarmManagerService extends SystemService {
                         Slog.v(TAG, "Alarm to uid=" + alarm.uid
                                 + " listener=" + alarm.listener.asBinder());
                     }
+                    // 通过binder接口调用AlarmManager那边ListenerWrapper的doAlarm。通过handler.post调用
                     alarm.listener.doAlarm(this);
                     mHandler.sendMessageDelayed(
                             mHandler.obtainMessage(AlarmHandler.LISTENER_TIMEOUT,
