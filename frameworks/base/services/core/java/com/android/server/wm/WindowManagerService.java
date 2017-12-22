@@ -911,7 +911,11 @@ public class WindowManagerService extends IWindowManager.Stub
             final InputManagerService im,
             final boolean haveInputMethods, final boolean showBootMsgs,
             final boolean onlyCore) {
+        // 为什么要用一个数组
         final WindowManagerService[] holder = new WindowManagerService[1];
+        // 同步的方法，可能立即执行，也可能需要等待一段时间。
+        // 当当前线程是handler的looper线程时，直接执行；不然通过handler post到looper线程执行，且会等待执行结束（可以设置超时）
+        // 保证在display线程执行，且等待执行完成
         DisplayThread.getHandler().runWithScissors(new Runnable() {
             @Override
             public void run() {
